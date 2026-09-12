@@ -1,0 +1,5 @@
+*.pdf -text binary
+*.pptx -text binary
+*.png -text binary
+*.svg text eol=lf
+*.md text eol=lf
