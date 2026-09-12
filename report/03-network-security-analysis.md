@@ -23,17 +23,20 @@ The investigation into the unauthorized access incident combined three complemen
 
 The scans below were run directly against FinSecure's own test deployment (`FinSWebApp`, hosted on Azure App Service) and its pre-production staging server, using the tools listed above from a Kali Linux workstation.
 
+![FinSWebApp login page](../evidence/pentest/finswebapp-login.jpg)
+*Figure 3 — The actual target of this assessment: the FinSWebApp login page, the internally developed web application at the center of the incident.*
+
 ![Nmap scan of the production FinSWebApp instance](../evidence/pentest/nmap-scan-production.jpg)
-*Figure 3a — Nmap service scan against the live, Azure-hosted FinSWebApp instance: only ports 80 and 443 are exposed externally, with a valid Azure-issued TLS certificate.*
+*Figure 4 — Nmap service scan against the live, Azure-hosted FinSWebApp instance: only ports 80 and 443 are exposed externally, with a valid Azure-issued TLS certificate.*
 
 ![Confirming the FinSWebApp production hostname and IP](../evidence/pentest/uncover-ip-address.jpg)
-*Figure 3b — Resolving the FinSWebApp production hostname to its Azure App Service IP address as part of reconnaissance.*
+*Figure 5 — Resolving the FinSWebApp production hostname to its Azure App Service IP address as part of reconnaissance.*
 
 ![OWASP ZAP vulnerability scan of FinSWebApp](../evidence/pentest/zap-vulnerability-scan.jpg)
-*Figure 3c — OWASP ZAP automated scan results for FinSWebApp: 12 alerts, including a missing Content-Security-Policy header and a vulnerable JavaScript library — the class of gap closed by the WAF and hardened headers in the [network redesign](02-network-design-and-implementation.md).*
+*Figure 6 — OWASP ZAP automated scan results for FinSWebApp: 12 alerts, including a missing Content-Security-Policy header and a vulnerable JavaScript library — the class of gap closed by the WAF and hardened headers in the [network redesign](02-network-design-and-implementation.md).*
 
 ![Nmap scan of the pre-production staging server](../evidence/pentest/nmap-scan-staging.jpg)
-*Figure 3d — Nmap scan of the pre-production staging server: SSH (22), HTTP (80), and HTTPS (443) all open, with the HTTPS service presenting a certificate that expired in 2010 — exactly the kind of stale, unmanaged TLS configuration the redesign's certificate and patch-management policy is meant to catch before a server reaches production.*
+*Figure 7 — Nmap scan of the pre-production staging server: SSH (22), HTTP (80), and HTTPS (443) all open, with the HTTPS service presenting a certificate that expired in 2010 — exactly the kind of stale, unmanaged TLS configuration the redesign's certificate and patch-management policy is meant to catch before a server reaches production.*
 
 ## Vulnerabilities Discovered
 
@@ -47,7 +50,7 @@ The scans below were run directly against FinSecure's own test deployment (`FinS
 The path an attacker actually followed, reconstructed from the SIEM, firewall logs, and traffic analysis above:
 
 ![Attack path](../diagrams/attack-path.svg)
-*Figure 3 — Reconstructed attack path: SQL injection entry point → credential harvesting → lateral movement to SFTP → data exfiltration.*
+*Figure 8 — Reconstructed attack path: SQL injection entry point → credential harvesting → lateral movement to SFTP → data exfiltration.*
 
 1. **Entry point** — SQL injection against the internally developed web application, over HTTP on port 80.
 2. **Credential harvesting** — the same injection flaw exposed enough backend information to recover working credentials.

@@ -18,6 +18,9 @@ Beyond compliance, three practical factors made Zero Trust the right call for Fi
 
 ## Implementation Steps
 
+![Zero Trust access decision flow](../diagrams/zero-trust-flow.svg)
+*Figure 9 — Every access request — employee, remote VPN session, or the GlobalTech B2B connection — passes through the same four gates: identity verification, context-aware policy, NGFW enforcement, and continuous re-verification.*
+
 The rollout followed the standard "never trust, always verify" sequence:
 
 1. **Inventory users, devices, and data flow.** Catalogued every employee, contractor, application, and data repository, and mapped how data actually moves between them — surfacing the segmentation gaps described in the [Network Security Analysis](03-network-security-analysis.md).

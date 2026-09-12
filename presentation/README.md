@@ -1,6 +1,6 @@
 # Presentation Walkthrough
 
-A step-by-step, readable version of [`FinSecure-Capstone-Presentation.pptx`](FinSecure-Capstone-Presentation.pptx) — the same 17 slides, in order, with their diagrams/screenshots and a short explanation of what each one is doing. Use this if you want to skim the deck's content without opening PowerPoint.
+A step-by-step, readable version of [`FinSecure-Capstone-Presentation.pptx`](FinSecure-Capstone-Presentation.pptx) — the same 18 slides, in order, with their diagrams/screenshots and a short explanation of what each one is doing. Use this if you want to skim the deck's content without opening PowerPoint.
 
 ---
 
@@ -30,11 +30,11 @@ Explains why three testing methods were used together rather than one: automated
 
 ## Step 7 — Live Evidence: Scanning FinSWebApp
 
+![FinSWebApp login page](../evidence/pentest/finswebapp-login.jpg)
 ![Nmap scan of the production FinSWebApp instance](../evidence/pentest/nmap-scan-production.jpg)
-
 ![OWASP ZAP vulnerability scan of FinSWebApp](../evidence/pentest/zap-vulnerability-scan.jpg)
 
-These are real scans, not mockups — Nmap (left) and OWASP ZAP (right) run from the group's own Kali Linux workstation against the group's own deployed `FinSWebApp` instance on Azure App Service, confirming a small external attack surface but flagging missing security headers and a vulnerable JavaScript library.
+These are real screenshots, not mockups, all run from the group's own Kali Linux workstation against the group's own deployed `FinSWebApp` instance on Azure App Service: the actual application under test (left), a Nmap scan confirming a small external attack surface with a valid TLS cert (center), and an OWASP ZAP scan flagging missing security headers and a vulnerable JavaScript library (right).
 
 ## Step 8 — The Attack Path, Reconstructed
 
@@ -54,32 +54,41 @@ Shows the pre-engagement network: a single WAF, no internal segmentation, and th
 
 Shows the rebuilt architecture: an NGFW plus dual active WAFs at the perimeter, three-tier isolation (DMZ → App Zone → Database Zone), a dedicated extra firewall around cardholder data, and per-department VLANs to contain any future breach.
 
-## Step 11 — Why Zero Trust, Specifically for FinSecure
+## Step 11 — Cloud Migration Evidence: The Actual Azure Deployment
+
+![FinSecure VNet overview](../evidence/cloud-migration/vnet-overview.jpg)
+![Creating the FinSecure Key Vault](../evidence/cloud-migration/key-vault-creation.jpg)
+![Transparent Data Encryption enabled on the primary database](../evidence/cloud-migration/postgresql-tde.jpg)
+![WAF managed rule set](../evidence/cloud-migration/waf-policy-rules.jpg)
+
+Real screenshots from the group's own Azure subscription — `Fin-SecureVnet`, `FinSecureVault`, and `finsecure_primary` are the actual deployed resources — showing the cloud-side counterpart to the on-prem redesign: network segmentation (VNet), secrets/key management (Key Vault), encryption at rest (TDE), and a 205-rule managed WAF policy blocking SQL injection, path traversal, and known CVE exploitation attempts.
+
+## Step 12 — Why Zero Trust, Specifically for FinSecure
 
 Maps each regulation to the Zero Trust principle it implicitly demands — PCI DSS to micro-segmentation, SOX to continuous verification, GLBA to least-privilege access — framing Zero Trust as a consequence of taking compliance seriously, not a trend FinSecure chased.
 
-## Step 12 — How It Works: Never Trust, Always Verify
+## Step 13 — How It Works: Never Trust, Always Verify
 
 ![Zero Trust access decision flow](../diagrams/zero-trust-flow.svg)
 
 Walks through the four-stage access-decision flow — identity verification, context-aware policy check, NGFW enforcement, and continuous re-verification — that now governs every request, whether from an employee, a remote VPN session, or the GlobalTech B2B connection.
 
-## Step 13 — Highest-Priority Risks (Rated Extreme)
+## Step 14 — Highest-Priority Risks (Rated Extreme)
 
 Surfaces the five highest-rated risks from the full 18-item risk register, each one mapped directly to a control already shown in the redesign or the Zero Trust rollout — the register isn't a separate compliance exercise, it's what justified the architecture.
 
-## Step 14 — What Now Governs the Network
+## Step 15 — What Now Governs the Network
 
 Summarizes the five key sections of the updated Network Security Policy, including the two sections — Remote Access & Removable Media, and Third-Party/Vendor Risk — that were added during the rebuild to close a real gap in the original document.
 
-## Step 15 — How We Responded to the Breach
+## Step 16 — How We Responded to the Breach
 
 Walks through the five-step incident response as a timeline, not a checklist: contain, investigate, notify, recover, review — with notification running in parallel with recovery rather than after it, since GLBA and client trust both demand speed.
 
-## Step 16 — Compliance Achieved — What's Next
+## Step 17 — Compliance Achieved — What's Next
 
 Closes the loop: confirmed compliance status against SOX, PCI DSS, GLBA, and the NIST Cybersecurity Framework on one side, and five concrete follow-up recommendations (recurring audits, ongoing training, IR drills) on the other — compliance is a status achieved, not a permanent state.
 
-## Step 17 — Thank You / Credits
+## Step 18 — Thank You / Credits
 
 Closing slide crediting Group 3, the course, and the University of Winnipeg, with a specific callout of individual contribution to the Network Security Analysis section and this rebuild.
