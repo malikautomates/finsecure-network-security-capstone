@@ -21,7 +21,7 @@ My own contribution to the original group project was the **Network Security Ana
 | [`risk-assessment/risk-register.md`](risk-assessment/risk-register.md) | The full asset-by-asset risk register |
 | [`diagrams/`](diagrams/) | Redrawn network architecture (before/after), attack-path, and Zero Trust flow diagrams (SVG) |
 | [`evidence/`](evidence/) | Real screenshots from the group's own testing: [`pentest/`](evidence/pentest/) (Nmap/OWASP ZAP scans of the live `FinSWebApp` deployment) and [`cloud-migration/`](evidence/cloud-migration/) (Azure portal evidence — VNet, Key Vault, TDE, WAF) |
-| [`presentation/`](presentation/) | The rebuilt capstone presentation deck (PPTX), with full speaker notes |
+| [`presentation/`](presentation/) | The rebuilt capstone presentation deck (PPTX) with full speaker notes, plus a [slide-by-slide README walkthrough](presentation/README.md) with images and short explanations |
 | [`reference/`](reference/) | Lightly cleaned working notes from the Cloud Migration, IAM, and Application Security modules — supplementary, not fully rewritten |
 
 ## Reading Order
