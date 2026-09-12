@@ -140,17 +140,34 @@ The investigation into the unauthorized access incident combined three complemen
 | Tool | Role | Key finding |
 |---|---|---|
 | **Nmap** | Port/service discovery, asset mapping | Web servers exposed port 80 (HTTP) with no enforced HTTPS redirect; SSH (port 22) reachable on internal servers, a brute-force risk if credentials are weak. |
-| **Nessus** | Vulnerability scanning | Outdated web server software and weak SSL/TLS configuration, increasing exposure to man-in-the-middle attacks. |
+| **OWASP ZAP** | Automated vulnerability scanning | Missing security headers (Content-Security-Policy, anti-clickjacking, Strict-Transport-Security), a vulnerable JavaScript library, and cookies issued without the `Secure` flag. |
 | **Metasploit** | Exploit verification | Confirmed that the SQL injection flaw in the internally built web application was practically exploitable, not just theoretical — payloads returned real backend data. |
 | **Wireshark** | Traffic analysis | High-volume, repeated HTTP connections from the web server to a single external IP — consistent with data exfiltration rather than normal traffic patterns. |
 | **Firewall/WAF log review (via SIEM)** | Correlation | A specific web endpoint showed a sustained pattern of SQL injection attempts, corroborating the Metasploit findings and pinpointing the entry point later confirmed in the incident timeline. |
 | **Policy & configuration audit** | Compliance review | Several critical servers were not properly segmented, allowing lateral movement between network segments — the same gap closed in the redesigned architecture. |
+
+### Live Reconnaissance and Scanning Evidence
+
+The scans below were run directly against FinSecure's own test deployment (`FinSWebApp`, hosted on Azure App Service) and its pre-production staging server, using the tools listed above from a Kali Linux workstation.
+
+![Nmap scan of the production FinSWebApp instance](../evidence/pentest/nmap-scan-production.jpg)
+*Figure 3a — Nmap service scan against the live, Azure-hosted FinSWebApp instance: only ports 80 and 443 are exposed externally, with a valid Azure-issued TLS certificate.*
+
+![Confirming the FinSWebApp production hostname and IP](../evidence/pentest/uncover-ip-address.jpg)
+*Figure 3b — Resolving the FinSWebApp production hostname to its Azure App Service IP address as part of reconnaissance.*
+
+![OWASP ZAP vulnerability scan of FinSWebApp](../evidence/pentest/zap-vulnerability-scan.jpg)
+*Figure 3c — OWASP ZAP automated scan results for FinSWebApp: 12 alerts, including a missing Content-Security-Policy header and a vulnerable JavaScript library — the class of gap closed by the WAF and hardened headers in the network redesign.*
+
+![Nmap scan of the pre-production staging server](../evidence/pentest/nmap-scan-staging.jpg)
+*Figure 3d — Nmap scan of the pre-production staging server: SSH (22), HTTP (80), and HTTPS (443) all open, with the HTTPS service presenting a certificate that expired in 2010 — exactly the kind of stale, unmanaged TLS configuration the redesign's certificate and patch-management policy is meant to catch before a server reaches production.*
 
 ### Vulnerabilities Discovered
 
 - **SQL Injection** in an internally developed web application, allowing unauthorized access to backend data.
 - **Cross-Site Scripting (XSS)** in the same web application, which could allow session hijacking or arbitrary script execution against other users.
 - **Weak authentication on SFTP servers** — default credentials (e.g., `admin`/`admin`) left them exposed to brute-force access.
+- **Missing security headers and an outdated client-side library**, confirmed by the OWASP ZAP scan above — lower-severity findings, but consistent with the same "hardening was skipped under deadline pressure" pattern that produced the SQL injection flaw.
 
 ### Attack Path
 
@@ -173,7 +190,7 @@ At the time of the incident, FinSecure's security posture was **moderate at best
 - **Internal segmentation**: implement VLANs per department (HR, Finance, IT) to contain lateral movement.
 - **Authentication**: enforce MFA for all users — especially privileged access — require strong, regularly rotated passwords, and eliminate default credentials outright.
 - **Training**: run regular security-awareness training focused on phishing prevention, credential hygiene, and incident reporting.
-- **Vulnerability management**: schedule recurring Nessus scans and enforce the patch-management SLAs defined in the Network Security Policy.
+- **Vulnerability management**: schedule recurring OWASP ZAP and Nmap scans and enforce the patch-management SLAs defined in the Network Security Policy.
 
 ---
 
@@ -302,7 +319,7 @@ Beyond the immediate data exposure, the incident placed FinSecure in violation o
 
 | Theme | What It Drove |
 |---|---|
-| **Vulnerability management** | Adoption of a recurring Nessus scanning and patch-management cadence |
+| **Vulnerability management** | Adoption of a recurring OWASP ZAP / Nmap scanning and patch-management cadence |
 | **Incident response planning** | A documented IR plan and a standing, cross-functional response team, rather than an ad hoc response |
 | **Continuous monitoring** | SIEM alert thresholds retuned to catch smaller anomalies earlier |
 | **Employee training** | General organization-wide security awareness training, plus specialized training for the IT team on distinguishing false positives from real incidents |

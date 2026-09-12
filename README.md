@@ -20,6 +20,7 @@ My own contribution to the original group project was the **Network Security Ana
 | [`policy/network-security-policy.md`](policy/network-security-policy.md) | The standalone Network Security Policy governing FinSecure's controls |
 | [`risk-assessment/risk-register.md`](risk-assessment/risk-register.md) | The full asset-by-asset risk register |
 | [`diagrams/`](diagrams/) | Redrawn network architecture (before/after), attack-path, and Zero Trust flow diagrams (SVG) |
+| [`evidence/`](evidence/) | Real screenshots from the group's own testing: [`pentest/`](evidence/pentest/) (Nmap/OWASP ZAP scans of the live `FinSWebApp` deployment) and [`cloud-migration/`](evidence/cloud-migration/) (Azure portal evidence — VNet, Key Vault, TDE, WAF) |
 | [`presentation/`](presentation/) | The rebuilt capstone presentation deck (PPTX), with full speaker notes |
 | [`reference/`](reference/) | Lightly cleaned working notes from the Cloud Migration, IAM, and Application Security modules — supplementary, not fully rewritten |
 
@@ -41,7 +42,7 @@ Or read it as one document: [`report/full-report.md`](report/full-report.md) / [
 **Compliance:** SOX · PCI DSS · GLBA · NIST Cybersecurity Framework
 **Network security:** NGFW · Web Application Firewall (dual active) · SIEM (primary + backup) · VLAN segmentation · Zero Trust Architecture
 **Identity:** Active Directory · AAA (RADIUS-based) · SSO · MFA · RBAC
-**Security testing tools:** Nmap · Nessus · Metasploit · Wireshark
+**Security testing tools:** Nmap · OWASP ZAP · Metasploit · Wireshark
 **Cloud (supplementary modules):** Microsoft Azure — VNets/NSGs, Azure AD, Key Vault, Transparent Data Encryption, Azure Security Center
 
 ## Credits

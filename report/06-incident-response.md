@@ -27,7 +27,7 @@ Beyond the immediate data exposure, the incident placed FinSecure in violation o
 
 | Theme | What It Drove |
 |---|---|
-| **Vulnerability management** | Adoption of a recurring Nessus scanning and patch-management cadence (see [Network Security Policy](../policy/network-security-policy.md)) |
+| **Vulnerability management** | Adoption of a recurring OWASP ZAP / Nmap scanning and patch-management cadence (see [Network Security Policy](../policy/network-security-policy.md)) |
 | **Incident response planning** | A documented IR plan and a standing, cross-functional response team, rather than an ad hoc response |
 | **Continuous monitoring** | SIEM alert thresholds retuned to catch smaller anomalies earlier |
 | **Employee training** | General organization-wide security awareness training, plus specialized training for the IT team on distinguishing false positives from real incidents |

@@ -15,6 +15,28 @@ Migrate FinSecure Technologies Inc.'s on-premises infrastructure — Active Dire
 - **Application/web layer** — Web Application Firewall in front of the migrated web tier, current TLS certificates, and a regular patch cadence for web servers and applications.
 - **Monitoring and incident response** — Azure Security Center as the continuous monitoring backbone, with a cloud-specific incident response plan and recurring employee security-awareness training.
 
+## Evidence: The Actual Azure Deployment
+
+These are screenshots from the group's own Azure subscription, not mockups — the resource names (`Fin-SecureVnet`, `FinSecureVault`, `finsecurepostgresql`) are the actual deployed resources built for this project.
+
+![FinSecure VNet overview](../evidence/cloud-migration/vnet-overview.jpg)
+*Fin-SecureVnet in Canada Central, with DDoS protection, Azure Firewall, and Microsoft Defender for Cloud available as configurable capabilities on the network.*
+
+![Creating the FinSecure Key Vault](../evidence/cloud-migration/key-vault-creation.jpg)
+*Provisioning FinSecureVault in the FinSecure-VNet resource group, with soft-delete and purge protection enabled by default.*
+
+![Key Vault access configured for Azure RBAC](../evidence/cloud-migration/key-vault-rbac.jpg)
+*FinSecure-KeyVault configured to use Azure role-based access control rather than legacy vault access policies — the same least-privilege principle applied network-wide in the [Zero Trust rollout](../report/05-zero-trust-architecture.md).*
+
+![Transparent Data Encryption enabled on the primary database](../evidence/cloud-migration/postgresql-tde.jpg)
+*Transparent Data Encryption turned on for the `finsecure_primary` SQL database, using a database-level customer-managed key rather than the server-level default — giving FinSecure direct control over key rotation and revocation.*
+
+![FinSecure PostgreSQL Flexible Server](../evidence/cloud-migration/postgresql-flexible-server.jpg)
+*The deployed `finsecurepostgresql` Azure Database for PostgreSQL Flexible Server instance backing the migrated database tier.*
+
+![WAF managed rule set](../evidence/cloud-migration/waf-policy-rules.jpg)
+*The Azure WAF policy's managed rule set (Microsoft_DefaultRuleSet_2.1, 205 rules) actively blocking SQL injection, path traversal, and known CVE exploitation attempts — the cloud-side counterpart to the on-prem dual-WAF design in the [network redesign](../report/02-network-design-and-implementation.md).*
+
 ## Relationship to the Flagship Report
 
 This module's Azure-specific controls (TDE, Key Vault, NSGs, Azure Security Center) are the cloud implementation of the same principles formalized on-prem in the [network redesign](../report/02-network-design-and-implementation.md) and [Network Security Policy](../policy/network-security-policy.md) — encryption at rest, least-privilege access, continuous monitoring, and PCI-DSS-driven segmentation of cardholder data.
