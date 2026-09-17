@@ -50,3 +50,13 @@ Or read it as one document: [`report/full-report.md`](report/full-report.md) / [
 **Group 3** — Case Studies, Issues & Capstone Project in Network Security, University of Winnipeg, Fall 2024
 **Instructor:** Victor Balogun
 **This rebuild:** Muhammed Abdulmalik (network security analysis / penetration-testing section author)
+
+## Licence and reuse
+
+No open-source licence is granted. This is group coursework: the original report, presentation and working notes were produced jointly by Group 3, so no single author can license them. The repository is published for portfolio review. Copyright remains with the respective authors; for any other use, get in touch first.
+
+## Contact
+
+- **Email:** [m.abdulmaliksani008@gmail.com](mailto:m.abdulmaliksani008@gmail.com)
+- **LinkedIn:** [linkedin.com/in/muhammed-abdulmalik-a84131267](https://www.linkedin.com/in/muhammed-abdulmalik-a84131267)
+- **GitHub:** [@malikautomates](https://github.com/malikautomates)
